@@ -189,10 +189,15 @@ workflows:
       - client_android_release_google_play:
           requires:
             - client_android_approve_google_play
-  #     - shell_app_ios_tests:
-  #         requires:
-  #           - shell_app_sim_base_ios
-  #           - test_suite_publish
+      - client_ios_simulator_release:
+          type: approval
+          requires:
+            - client_ios
+          filters:
+            branches:
+              only:
+                - /sdk-\d+/
+                - /.*all-ci.*/
 
   shell_app:
     jobs:
@@ -310,8 +315,21 @@ jobs:
       - fetch_cocoapods_specs
       - run: expotools ios-generate-dynamic-macros
       - run: nix run expo.procps --command fastlane ios create_simulator_build
+      - save_cache:
+          key: client-ios-simulator-{{ .Revision }}
+          paths:
+            - ~/expo/ios/build
       - store_artifacts:
           path: ~/Library/Logs/fastlane/
+
+  client_ios_simulator_release:
+    executor: mac
+    steps:
+      - install_nix
+      - setup
+      - restore_cache:
+          key: client-ios-simulator-{{ .Revision }}
+      - run: expotools ios-add-simulator-build --app ./ios/build
 
   expo_client_build:
     executor: mac
