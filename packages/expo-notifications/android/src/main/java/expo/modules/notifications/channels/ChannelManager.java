@@ -10,6 +10,14 @@ public interface ChannelManager {
 
   void deleteChannel(String channelId, final Context context);
 
+  default void addChannel(String channelId, ChannelPOJO channel, final Context context, Runnable continuation) {
+    addChannel(channelId, channel, context);
+  }
+
+  default void deleteChannel(String channelId, final Context context, Runnable continuation) {
+    deleteChannel(channelId, context);
+  }
+
   Future<ChannelPOJO> getPropertiesForChannelId(String channelId, final Context context);
 
 }

@@ -18,15 +18,25 @@ public class ChannelScopeManager implements ChannelManager {
 
   @Override
   public void addChannel(String channelId, ChannelPOJO channel, Context context) {
-    channelId = scope(channelId);
-    channel = scope(channel);
-    nextChannelManager.addChannel(channelId, channel, context);
+    addChannel(channelId, channel, context, () -> {});
   }
 
   @Override
   public void deleteChannel(String channelId, Context context) {
+    deleteChannel(channelId, context, () -> {});
+  }
+
+  @Override
+  public void addChannel(String channelId, ChannelPOJO channel, Context context, Runnable continuation) {
     channelId = scope(channelId);
-    nextChannelManager.deleteChannel(channelId, context);
+    channel = scope(channel);
+    nextChannelManager.addChannel(channelId, channel, context, continuation);
+  }
+
+  @Override
+  public void deleteChannel(String channelId, Context context, Runnable continuation) {
+    channelId = scope(channelId);
+    nextChannelManager.deleteChannel(channelId, context, continuation);
   }
 
   @Override

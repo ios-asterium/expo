@@ -125,15 +125,13 @@ public class NotificationsModule extends ExportedModule implements RegistryLifec
 
     ChannelPOJO channelPOJO = ChannelPOJO.createChannelPOJO(data);
 
-    mChannelManager.addChannel(channelId, channelPOJO, mContext.getApplicationContext());
-    promise.resolve(null);
+    mChannelManager.addChannel(channelId, channelPOJO, mContext.getApplicationContext(), () -> { promise.resolve(null); });
   }
 
   @ExpoMethod
   public void deleteChannel(String channelId, final Promise promise) {
     channelId = getProperString(channelId);
-    mChannelManager.deleteChannel(channelId, mContext.getApplicationContext());
-    promise.resolve(null);
+    mChannelManager.deleteChannel(channelId, mContext.getApplicationContext(), () -> { promise.resolve(null); });
   }
 
   @ExpoMethod

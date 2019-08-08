@@ -14,7 +14,7 @@ public class ThreadSafeChannelManager implements ChannelManager {
 
   private ExecutorService mSingleThreadExecutor = Executors.newSingleThreadExecutor();
 
-  private ThreadSafeChannelManager () {}
+  private ThreadSafeChannelManager() {}
 
   public static synchronized ChannelManager getInstance() {
     if (mInstance == null) {
@@ -31,6 +31,26 @@ public class ThreadSafeChannelManager implements ChannelManager {
   @Override
   public void deleteChannel(String channelId, Context context) {
     mSingleThreadExecutor.execute(() -> mChannelManager.deleteChannel(channelId, context));
+  }
+
+  @Override
+  public void addChannel(String channelId, ChannelPOJO channel, Context context, Runnable continuation) {
+    mSingleThreadExecutor.execute(
+      () -> {
+        mChannelManager.addChannel(channelId, channel, context);
+        continuation.run();
+      }
+    );
+  }
+
+  @Override
+  public void deleteChannel(String channelId, Context context, Runnable continuation) {
+    mSingleThreadExecutor.execute(
+      () -> {
+        mChannelManager.deleteChannel(channelId, context);
+        continuation.run();
+      }
+    );
   }
 
   @Override
