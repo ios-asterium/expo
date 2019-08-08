@@ -23,38 +23,38 @@
   return self;
 }
 
-- (void)notifyAboutUserInteractionForExperienceId:(NSString*)experienceId
+- (void)notifyAboutUserInteractionForAppId:(NSString*)appId
                                   userInteraction:(NSDictionary*)userInteraction
 {
-  id<EXMailbox> mailbox = [self.mailboxes objectForKey:experienceId];
+  id<EXMailbox> mailbox = [self.mailboxes objectForKey:appId];
   if (mailbox) {
     [mailbox onUserInteraction:userInteraction];
     return;
   }
   
-  [self.notificationRepository addUserInteractionForExperienceId:experienceId       userInteraction:userInteraction];
+  [self.notificationRepository addUserInteractionForAppId:appId       userInteraction:userInteraction];
 }
 
-- (void)notifyAboutForegroundNotificationForExperienceId:(NSString*)experienceId
+- (void)notifyAboutForegroundNotificationForAppId:(NSString*)appId
                                             notification:(NSDictionary*)notification
 {
-  id<EXMailbox> mailbox = [self.mailboxes objectForKey:experienceId];
+  id<EXMailbox> mailbox = [self.mailboxes objectForKey:appId];
   if (mailbox) {
     [mailbox onForegroundNotification:notification];
     return;
   }
   
-  [self.notificationRepository addForegroundNotificationForExperienceId:experienceId foregroundNotification:notification];
+  [self.notificationRepository addForegroundNotificationForAppId:appId foregroundNotification:notification];
 }
 
-- (void)registerModuleAndGetPendingDeliveriesWithExperienceId:(NSString*)experienceId
+- (void)registerModuleAndGetPendingDeliveriesWithAppId:(NSString*)appId
                                                       mailbox:(id<EXMailbox>)mailbox
 {
-  self.mailboxes[experienceId] = mailbox;
+  self.mailboxes[appId] = mailbox;
   
-  NSArray<NSDictionary*> *pendingForegroundNotifications = [self.notificationRepository getForegroundNotificationsForExperienceId:experienceId];
+  NSArray<NSDictionary*> *pendingForegroundNotifications = [self.notificationRepository getForegroundNotificationsForAppId:appId];
   
-  NSArray<NSDictionary*> *pendingUserInteractions = [self.notificationRepository getUserInterationsForExperienceId:experienceId];
+  NSArray<NSDictionary*> *pendingUserInteractions = [self.notificationRepository getUserInterationsForAppId:appId];
   
   for (NSDictionary *userInteraction in pendingUserInteractions) {
     [mailbox onUserInteraction:userInteraction];
@@ -65,9 +65,9 @@
   }
 }
 
-- (void)unregisterModuleWithExperienceId:(NSString*)experienceId
+- (void)unregisterModuleWithappId:(NSString*)appId
 {
-  [self.mailboxes removeObjectForKey:experienceId];
+  [self.mailboxes removeObjectForKey:appId];
 }
 
 @end

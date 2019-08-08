@@ -30,32 +30,32 @@ static dispatch_queue_t queue;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     sharedInstance = [[EXThreadSafePostOffice alloc] init];
-    queue = dispatch_queue_create("host.exp.exponent.EXUserNotificationCenter", DISPATCH_QUEUE_SERIAL);
+    queue = dispatch_queue_create("host.exp.exponent.EXThreadSafePostOffice", DISPATCH_QUEUE_SERIAL);
   });
   return sharedInstance;
 }
 
-- (void)notifyAboutForegroundNotificationForExperienceId:(NSString *)experienceId notification:(NSDictionary *)notification {
+- (void)notifyAboutForegroundNotificationForAppId:(NSString *)appId notification:(NSDictionary *)notification {
   dispatch_async(queue, ^{
-    [self.insecurePostOffice notifyAboutForegroundNotificationForExperienceId:experienceId notification:notification];
+    [self.insecurePostOffice notifyAboutForegroundNotificationForAppId:appId notification:notification];
   });
 }
 
-- (void)notifyAboutUserInteractionForExperienceId:(NSString *)experienceId userInteraction:(NSDictionary *)userInteraction { 
+- (void)notifyAboutUserInteractionForAppId:(NSString *)appId userInteraction:(NSDictionary *)userInteraction {
   dispatch_async(queue, ^{
-    [self.insecurePostOffice notifyAboutUserInteractionForExperienceId:experienceId userInteraction:userInteraction];
+    [self.insecurePostOffice notifyAboutUserInteractionForAppId:appId userInteraction:userInteraction];
   });
 }
 
-- (void)registerModuleAndGetPendingDeliveriesWithExperienceId:(NSString *)experienceId mailbox:(id<EXMailbox>)mailbox { 
+- (void)registerModuleAndGetPendingDeliveriesWithAppId:(NSString *)appId mailbox:(id<EXMailbox>)mailbox {
   dispatch_async(queue, ^{
-    [self.insecurePostOffice registerModuleAndGetPendingDeliveriesWithExperienceId:experienceId mailbox:mailbox];
+    [self.insecurePostOffice registerModuleAndGetPendingDeliveriesWithAppId:appId mailbox:mailbox];
   });
 }
 
-- (void)unregisterModuleWithExperienceId:(NSString *)experienceId { 
+- (void)unregisterModuleWithappId:(NSString *)appId {
   dispatch_async(queue, ^{
-    [self.insecurePostOffice unregisterModuleWithExperienceId:experienceId];
+    [self.insecurePostOffice unregisterModuleWithappId:appId];
   });
 }
 

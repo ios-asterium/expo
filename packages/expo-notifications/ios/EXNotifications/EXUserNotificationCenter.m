@@ -23,6 +23,16 @@ static dispatch_queue_t queue;
   return self;
 }
 
++ (id<EXUserNotificationCenterProxy>)sharedInstance
+{
+    static EXUserNotificationCenter *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[EXUserNotificationCenter alloc] init];
+    });
+    return sharedInstance;
+}
+
 - (void)requestAuthorizationWithOptions:(UNAuthorizationOptions)options completionHandler:(void (^)(BOOL granted, NSError *__nullable error))completionHandler {
   dispatch_async(queue, ^{
     [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:options completionHandler:^(BOOL granted, NSError * _Nullable error) {

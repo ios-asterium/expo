@@ -57,7 +57,7 @@ static NSString * const scopedIdentifierSeparator = @":";
   }*/
   
   NSString *experienceId = response.notification.request.content.userInfo[@"experienceId"];
-  [[EXThreadSafePostOffice sharedInstance] notifyAboutUserInteractionForExperienceId:experienceId userInteraction:[pendingNotification propertiesUserInteractionFormat]];
+  [[EXThreadSafePostOffice sharedInstance] notifyAboutUserInteractionForAppId:experienceId userInteraction:[pendingNotification propertiesUserInteractionFormat]];
   completionHandler();
 }
 
@@ -98,7 +98,7 @@ static NSString * const scopedIdentifierSeparator = @":";
   }*/
   
   NSString *experienceId = userInfo[@"experienceId"];
-  [[EXThreadSafePostOffice sharedInstance] notifyAboutForegroundNotificationForExperienceId:experienceId notification:[pendingNotification propertiesForegroundNotificationFormat]];
+  [[EXThreadSafePostOffice sharedInstance] notifyAboutForegroundNotificationForAppId:experienceId notification:[pendingNotification propertiesForegroundNotificationFormat]];
 
   completionHandler(UNNotificationPresentationOptionNone);
 }
