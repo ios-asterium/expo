@@ -1,5 +1,7 @@
 package expo.modules.notifications.push;
 
+import android.content.Context;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,9 +14,9 @@ public class PushNotificationEngineProvider {
 
     private static Map<String, Engine> engines;
 
-    public synchronized static Engine getPushNotificationEngine() {
+    public synchronized static Engine getPushNotificationEngine(Context context) {
         init();
-        return engines.get(Configuration.PUSH_NOTIFICATION_ENGINE);
+        return engines.get(Configuration.getValueFor(Configuration.PUSH_ENGINE_KEY, context));
     }
 
     private static void init() {

@@ -104,7 +104,7 @@ public class NotificationsModule extends ExportedModule implements RegistryLifec
 
   @ExpoMethod
   public void getPushTokenAsync(final Promise promise) {
-    Engine pushNotificationEngine = PushNotificationEngineProvider.getPushNotificationEngine();
+    Engine pushNotificationEngine = PushNotificationEngineProvider.getPushNotificationEngine(mContext.getApplicationContext());
     pushNotificationEngine.getToken(
             mAppId,
             mContext.getApplicationContext(),

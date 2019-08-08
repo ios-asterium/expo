@@ -8,15 +8,17 @@ import android.support.v4.app.NotificationCompat;
 
 import java.util.UUID;
 
+import expo.modules.notifications.configuration.Configuration;
+
 import static expo.modules.notifications.NotificationConstants.NOTIFICATION_OBJECT_KEY;
-import static expo.modules.notifications.configuration.Configuration.MAIN_ACTIVITY_NAME;
 
 public class IntentModifier implements NotificationModifier {
   @Override
   public void modify(NotificationCompat.Builder builder, Bundle notification, Context context, String appId) {
+    String activityName = Configuration.getValueFor(Configuration.NOTIFICATION_ACTIVITY_NAME_KEY, context);
     Class activityClass = null;
     try {
-      activityClass = Class.forName(MAIN_ACTIVITY_NAME);
+      activityClass = Class.forName(activityName);
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
     }

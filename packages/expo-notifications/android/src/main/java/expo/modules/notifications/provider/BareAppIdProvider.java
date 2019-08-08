@@ -2,7 +2,6 @@ package expo.modules.notifications.provider;
 
 import android.content.Context;
 
-import org.unimodules.core.ModuleRegistry;
 import org.unimodules.core.interfaces.InternalModule;
 
 import java.util.Collections;
@@ -12,12 +11,15 @@ import expo.modules.notifications.configuration.Configuration;
 
 public class BareAppIdProvider implements InternalModule, AppIdProvider{
 
-    public BareAppIdProvider(Context context) { }
+    private Context mContext;
 
-    public BareAppIdProvider() {}
+    public BareAppIdProvider(Context context) {
+        mContext = context.getApplicationContext();
+    }
 
     public String getAppId() {
-        return Configuration.APP_ID;
+        String appId = Configuration.getValueFor(Configuration.APP_ID_KEY, mContext);
+        return appId;
     }
 
     @Override

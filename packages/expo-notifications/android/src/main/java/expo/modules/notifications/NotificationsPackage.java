@@ -28,7 +28,7 @@ public class NotificationsPackage extends BasePackage {
   @Override
   public List<InternalModule> createInternalModules(Context context) {
     return Arrays.asList(
-            new BareAppIdProvider(),
+            new BareAppIdProvider(context),
             new BareStringScoper()
     );
   }

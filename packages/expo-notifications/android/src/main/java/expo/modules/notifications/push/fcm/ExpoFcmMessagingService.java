@@ -22,7 +22,7 @@ public class ExpoFcmMessagingService extends FirebaseMessagingService {
 
   @Override
   public void onNewToken(String token) {
-    PushNotificationEngineProvider.getPushNotificationEngine().onFirebaseToken(token, this.getApplicationContext());
+    PushNotificationEngineProvider.getPushNotificationEngine(getApplicationContext()).onFirebaseToken(token, this.getApplicationContext());
   }
 
   @Override

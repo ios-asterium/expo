@@ -25,7 +25,7 @@ public class SmartNotificationPresenter implements NotificationPresenter {
   private boolean isInForegroundState() {
       ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo();
       ActivityManager.getMyMemoryState(appProcessInfo);
-      return (appProcessInfo.importance == IMPORTANCE_FOREGROUND || appProcessInfo.importance == IMPORTANCE_VISIBLE);
+      return (appProcessInfo.importance == IMPORTANCE_FOREGROUND || appProcessInfo.importance == IMPORTANCE_VISIBLE); // check
   }
 
 }

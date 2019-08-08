@@ -1,19 +1,46 @@
 package expo.modules.notifications.configuration;
 
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.os.Bundle;
+
+import java.util.HashMap;
+
 public class Configuration {
 
-    public static String APP_ID = "@szymon20000/wefwefjwhefwhefwefwefwef";//"defaultId";
+    public static String APP_ID_KEY = "appId";
+    public static String NOTIFICATION_ACTIVITY_NAME_KEY = "notificationReceiver";
+    public static String PUSH_ENGINE_KEY = "pushNotificationEngine";
 
-    public static String PUSH_NOTIFICATION_ENGINE = "expo"; // possible: bare, expo, none
-    /*
-        if 'none' value is set then add the following meta data to AndroidManifest.xml
+    static HashMap<String, String> configuration = new HashMap<>();
 
-        <meta-data
-            android:name="firebase_messaging_auto_init_enabled"
-            android:value="false"
-        />
-     */
+    static HashMap<String, String> defaultVaules = new HashMap<>();
 
-    public static String MAIN_ACTIVITY_NAME = "com.notifications_test.MainActivity";
+    static {
+        defaultVaules.put(APP_ID_KEY, "defaultId");
+        defaultVaules.put(NOTIFICATION_ACTIVITY_NAME_KEY, null);
+        defaultVaules.put(PUSH_ENGINE_KEY, "none");
+    }
+
+    public static String getValueFor(String name, Context context) {
+        if (configuration.containsKey(name)) {
+            return configuration.get(name);
+        }
+
+        String value = null;
+        try {
+            ApplicationInfo ai = context.getApplicationInfo();
+            Bundle bundle = ai.metaData;
+            value = bundle.getString(name);
+        } catch (Exception e) {
+
+        }
+        if (value == null) {
+            configuration.put(name, defaultVaules.get(name));
+        } else {
+            configuration.put(name, value);
+        }
+        return configuration.get(name);
+    }
 
 }
