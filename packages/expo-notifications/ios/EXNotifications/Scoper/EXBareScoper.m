@@ -16,6 +16,10 @@ UM_REGISTER_MODULE()
 }
 
 - (NSString *)getUnscopedString:(NSString *)string {
+  NSArray<NSString*> *parts = [string componentsSeparatedByString:@":"];
+  if ([parts count] > 1) {
+    return parts[1];
+  }
   return string;
 }
 

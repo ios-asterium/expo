@@ -5,6 +5,7 @@
 #import "UMEventEmitterService.h"
 #import <EXNotifications/EXScoper.h>
 #import <EXNotifications/EXAppIdProvider.h>
+#import <EXNotifications/MessageUnscoper.h>
 
 @interface EXNotifications ()
 
@@ -334,11 +335,15 @@ UM_EXPORT_METHOD_AS(deleteCategoryAsync,
 
 - (void)onForegroundNotification:(NSDictionary *)notification
 {
+  id<EXScoper> scoper = [_moduleRegistry getModuleImplementingProtocol:@protocol(EXScoper)];
+  notification = [MessageUnscoper getUnscopedMessage:notification scoper:scoper];
   [_eventEmitter sendEventWithName:@"Exponent.onForegroundNotification" body:notification];
 }
 
 - (void)onUserInteraction:(NSDictionary *)userInteraction
 {
+  id<EXScoper> scoper = [_moduleRegistry getModuleImplementingProtocol:@protocol(EXScoper)];
+  userInteraction = [MessageUnscoper getUnscopedMessage:userInteraction scoper:scoper];
   [_eventEmitter sendEventWithName:@"Exponent.onUserInteraction" body:userInteraction];
 }
 
