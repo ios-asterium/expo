@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface EXNotifications : UMExportedModule <EXMailbox, UMModuleRegistryConsumer>
+@interface EXNotifications : UMExportedModule <EXMailbox, UMModuleRegistryConsumer, UMEventEmitter>
 
 @end
 

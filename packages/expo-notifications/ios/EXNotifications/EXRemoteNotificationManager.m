@@ -1,14 +1,9 @@
 // Copyright 2015-present 650 Industries. All rights reserved.
 
 #import "EXApiV2Client+EXRemoteNotifications.h"
-#import "EXEnvironment.h"
-#import "EXKernel.h"
-#import "EXProvisioningProfile.h"
 #import "EXRemoteNotificationManager.h"
 #import "NSData+EXRemoteNotifications.h"
 #import "EXUserNotificationCenter.h"
-
-#import <React/RCTUtils.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -55,7 +50,7 @@ typedef void(^EXRemoteNotificationAPNSTokenHandler)(NSData * _Nullable apnsToken
   if (![self supportsCurrentRuntimeEnvironment]) {
     // don't register, because the detached app may not be built with APNS entitlements,
     // and in that case this method would actually be bad to call. (not just a no-op.)
-    DDLogWarn(@"Expo Remote Notification services won't work in an ExpoKit app because Expo cannot manage your APNS certificates.");
+    NSLog(@"Expo Remote Notification services won't work in an ExpoKit app because Expo cannot manage your APNS certificates.");
     
     // when the app is eligible to register for remote notifications,
     // we eventually call [self registerAPNSToken] and fulfill the pending promises,
@@ -63,7 +58,7 @@ typedef void(^EXRemoteNotificationAPNSTokenHandler)(NSData * _Nullable apnsToken
     [self rejectPendingAPNSTokenHandlers];
   } else {
     dispatch_async(dispatch_get_main_queue(), ^{
-      [RCTSharedApplication() registerForRemoteNotifications];
+      [[UIApplication sharedApplication] registerForRemoteNotifications];
     });
   }
 }
@@ -122,7 +117,7 @@ typedef void(^EXRemoteNotificationAPNSTokenHandler)(NSData * _Nullable apnsToken
 - (void)getExpoPushTokenForScopedModule:(id)scopedModule
                       completionHandler:(void (^)(NSString * _Nullable, NSError * _Nullable))handler
 {
-  __weak id weakScopedModule = scopedModule;
+  /*__weak id weakScopedModule = scopedModule;
   dispatch_async(_queue, ^{
     [self _canRegisterForRemoteNotificationsWithCompletionHandler:^(BOOL can) {
       if (!can) {
@@ -148,7 +143,7 @@ typedef void(^EXRemoteNotificationAPNSTokenHandler)(NSData * _Nullable apnsToken
         __strong id strongScopedModule = weakScopedModule;
         if (!strongScopedModule) {
           NSError *error = [NSError errorWithDomain:kEXKernelErrorDomain
-                                               code:EXKernelErrorCodeModuleDeallocated
+                                              code:EXKernelErrorCodeModuleDeallocated
                                            userInfo:@{
                                                       NSLocalizedDescriptionKey: @"The scoped module that requested an Expo push token was deallocated",
                                                       }];
@@ -157,7 +152,7 @@ typedef void(^EXRemoteNotificationAPNSTokenHandler)(NSData * _Nullable apnsToken
         }
 
         if (apnsToken) {
-          NSString *experienceId = ((EXScopedBridgeModule *)scopedModule).experienceId;
+         /NSString *experienceId = ((EXScopedBridgeModule *)scopedModule).experienceId;
           [[EXApiV2Client sharedClient] getExpoPushTokenForExperience:experienceId
                                                           deviceToken:apnsToken
                                                     completionHandler:handler];
@@ -174,7 +169,7 @@ typedef void(^EXRemoteNotificationAPNSTokenHandler)(NSData * _Nullable apnsToken
 
       [self registerForRemoteNotifications];
     }];
-  });
+  });*/
 }
 
 #pragma mark - Internal
@@ -195,7 +190,7 @@ typedef void(^EXRemoteNotificationAPNSTokenHandler)(NSData * _Nullable apnsToken
   [[EXApiV2Client sharedClient] updateDeviceToken:currentToken completionHandler:^(NSError * _Nullable error) {
     dispatch_async(self->_queue, ^{
       if (error) {
-        DDLogWarn(@"Failed to send the APNS token to the Expo server: %@", error);
+       // DDLogWarn(@"Failed to send the APNS token to the Expo server: %@", error);
       }
 
       if ([currentToken isEqualToData:self->_currentAPNSToken]) {
@@ -225,9 +220,9 @@ typedef void(^EXRemoteNotificationAPNSTokenHandler)(NSData * _Nullable apnsToken
 
 - (BOOL)supportsCurrentRuntimeEnvironment
 {
-  if (![EXEnvironment sharedEnvironment].isDetached) {
-    return YES;
-  }
+ // if (![EXEnvironment sharedEnvironment].isDetached) {
+ //   return YES;
+ // }
 
 #ifdef EX_DETACHED_SERVICE
   BOOL isBuiltByService = YES;

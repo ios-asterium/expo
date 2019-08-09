@@ -1,10 +1,13 @@
-import DeviceEventEmitter from 'react-native/Libraries/EventEmitter/RCTDeviceEventEmitter';
+import { EventEmitter as NativeEventEmitter, NativeModulesProxy } from '@unimodules/core';
 import {
   OnUserInteractionListener,
   OnForegroundNotificationListener,
   UserInteraction,
   LocalNotification,
 } from './Notifications.types';
+
+const { ExponentNotifications } = NativeModulesProxy;
+const DeviceEventEmitter = new NativeEventEmitter(ExponentNotifications);
 
 export class Mailbox {
   private onUserInteractionListeners: Map<string, OnUserInteractionListener>;

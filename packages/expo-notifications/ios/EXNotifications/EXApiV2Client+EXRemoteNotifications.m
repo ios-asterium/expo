@@ -1,15 +1,13 @@
 // Copyright 2015-present 650 Industries. All rights reserved.
 
 #import "EXApiV2Client+EXRemoteNotifications.h"
-#import "EXKernel.h"
-#import "EXProvisioningProfile.h"
 #import "NSData+EXRemoteNotifications.h"
 
 @implementation EXApiV2Client (EXRemoteNotifications)
 
 - (NSURLSessionTask *)updateDeviceToken:(NSData *)deviceToken completionHandler:(void (^)(NSError * _Nullable))handler
 {
-  NSMutableDictionary *arguments = [NSMutableDictionary dictionaryWithDictionary:@{
+  /*NSMutableDictionary *arguments = [NSMutableDictionary dictionaryWithDictionary:@{
     @"deviceId": [EXKernel deviceInstallUUID],
     @"appId": NSBundle.mainBundle.bundleIdentifier,
     @"deviceToken": deviceToken.apnsTokenString,
@@ -25,6 +23,8 @@
               completionHandler:^(EXApiV2Result * _Nullable response, NSError * _Nullable error) {
                 handler(error);
               }];
+   */
+  return nil; // to remove
 }
 
 
@@ -32,7 +32,7 @@
                                         deviceToken:(NSData *)deviceToken
                                   completionHandler:(void (^)(NSString * _Nullable, NSError * _Nullable))handler
 {
-  NSMutableDictionary *arguments = [NSMutableDictionary dictionaryWithDictionary:@{
+  /*NSMutableDictionary *arguments = [NSMutableDictionary dictionaryWithDictionary:@{
     @"deviceId": [EXKernel deviceInstallUUID],
     @"experienceId": experienceId,
     @"appId": NSBundle.mainBundle.bundleIdentifier,
@@ -66,6 +66,8 @@
                 NSString *expoPushToken = (NSString *)data[@"expoPushToken"];
                 handler(expoPushToken, nil);
               }];
+   */
+  return nil; // to remove
 }
 
 - (NSError *)_errorForMalformedResult:(EXApiV2Result *)result

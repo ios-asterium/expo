@@ -43,7 +43,7 @@ export declare type ActionType = {
     };
 };
 export declare type UserInteraction = LocalNotification & {
-    actionType?: string;
+    actionId?: string;
     userText?: string;
 };
 export declare type OnUserInteractionListener = (userInteraction: UserInteraction) => void;

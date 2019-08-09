@@ -7,7 +7,7 @@
 
 - (NSString*)getScopedString:(NSString*)string;
 
-+ (NSString*)getUnscopedString:(NSString*)string;
+- (NSString*)getUnscopedString:(NSString*)string;
 
 @end
 

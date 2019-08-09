@@ -53,9 +53,9 @@ static dispatch_queue_t queue;
   });
 }
 
-- (void)unregisterModuleWithappId:(NSString *)appId {
+- (void)unregisterModuleWithAppId:(NSString *)appId {
   dispatch_async(queue, ^{
-    [self.insecurePostOffice unregisterModuleWithappId:appId];
+    [self.insecurePostOffice unregisterModuleWithAppId:appId];
   });
 }
 

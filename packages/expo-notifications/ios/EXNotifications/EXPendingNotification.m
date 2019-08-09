@@ -5,7 +5,7 @@
 
 @interface EXPendingNotification ()
 
-@property (nonatomic, strong) NSString *experienceId;
+@property (nonatomic, strong) NSString *appId;
 @property (nonatomic, strong) NSDictionary *body;
 @property (nonatomic, assign) BOOL isRemote;
 @property (nonatomic, assign) BOOL isFromBackground;
@@ -19,7 +19,7 @@
 - (instancetype)initWithNotification:(UNNotification *)notification
 {
   NSDictionary *payload = notification.request.content.userInfo ?: @{};
-  return [self initWithExperienceId:payload[@"experienceId"]
+  return [self initWithAppId:payload[@"appId"]
                    notificationBody:payload[@"body"]
                            isRemote:[notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]
                    isFromBackground:NO
@@ -27,12 +27,12 @@
                            userText:nil];
 }
 
-- (instancetype)initWithNotificationResponse:(UNNotificationResponse *)notificationResponse identifiersManager:(id<EXNotificationsIdentifiersManager>)manager
+- (instancetype)initWithNotificationResponse:(UNNotificationResponse *)notificationResponse
 {
   if (self = [self initWithNotification:notificationResponse.notification]) {
     _isFromBackground = [UIApplication sharedApplication].applicationState != UIApplicationStateActive;
     if (![notificationResponse.actionIdentifier isEqualToString:UNNotificationDefaultActionIdentifier]) {
-      _actionId = [manager exportedIdForInternalIdentifier:notificationResponse.actionIdentifier];
+      _actionId = notificationResponse.actionIdentifier;
     }
     if ([notificationResponse isKindOfClass:[UNTextInputNotificationResponse class]]) {
       _userText = ((UNTextInputNotificationResponse *) notificationResponse).userText;
@@ -41,7 +41,7 @@
   return self;
 }
 
-- (instancetype)initWithExperienceId:(NSString *)experienceId
+- (instancetype)initWithAppId:(NSString *)appId
                     notificationBody:(NSDictionary *)body
                             isRemote:(BOOL)isRemote
                     isFromBackground:(BOOL)isFromBackground
@@ -50,7 +50,7 @@
   if (self = [super init]) {
     _isRemote = isRemote;
     _isFromBackground = isFromBackground;
-    _experienceId = experienceId;
+    _appId = appId;
     _body = body ?: @{};
     _actionId = actionId;
     _userText = userText;

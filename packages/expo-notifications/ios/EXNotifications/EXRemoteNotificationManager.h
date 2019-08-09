@@ -5,7 +5,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface EXRemoteNotificationManager : NSObject <EXNotificationsScopedModuleDelegate>
+@interface EXRemoteNotificationManager : NSObject 
 
 - (instancetype)initWithUserNotificationCenter:(EXUserNotificationCenter *)userNotificationCenter;
 - (void)registerForRemoteNotifications;

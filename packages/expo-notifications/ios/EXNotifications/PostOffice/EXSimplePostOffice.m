@@ -65,7 +65,7 @@
   }
 }
 
-- (void)unregisterModuleWithappId:(NSString*)appId
+- (void)unregisterModuleWithAppId:(NSString*)appId
 {
   [self.mailboxes removeObjectForKey:appId];
 }

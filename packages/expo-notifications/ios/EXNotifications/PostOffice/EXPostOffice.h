@@ -13,7 +13,7 @@
 
 - (void)registerModuleAndGetPendingDeliveriesWithAppId:(NSString*)appId mailbox:(id<EXMailbox>)mailbox;
 
-- (void)unregisterModuleWithappId:(NSString*)appId;
+- (void)unregisterModuleWithAppId:(NSString*)appId;
 
 @end
 

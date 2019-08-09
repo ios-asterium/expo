@@ -48,7 +48,7 @@ export type ActionType = {
 };
 
 export type UserInteraction = LocalNotification & {
-    actionType?: string;
+    actionId?: string;
     userText?: string;
 }
 
