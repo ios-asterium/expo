@@ -17,7 +17,7 @@ import expo.modules.notifications.scoper.BareStringScoper;
 public class NotificationsPackage extends BasePackage {
   @Override
   public List<ExportedModule> createExportedModules(Context context) {
-    return Collections.singletonList((ExportedModule) new NotificationsModule(context));
+    return Collections.singletonList(new NotificationsModule(context));
   }
 
   @Override

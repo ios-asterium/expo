@@ -41,6 +41,7 @@ import expo.modules.notifications.presenters.NotificationPresenter;
 import expo.modules.notifications.exceptions.UnableToScheduleException;
 import expo.modules.notifications.managers.SchedulersManagerProxy;
 import expo.modules.notifications.schedulers.CalendarSchedulerModel;
+import expo.modules.notifications.scoper.MessageUnscoper;
 import expo.modules.notifications.scoper.NotificationScoper;
 import expo.modules.notifications.scoper.StringScoper;
 
@@ -316,6 +317,7 @@ public class NotificationsModule extends ExportedModule implements RegistryLifec
 
   @Override
   public void onUserInteraction(Bundle userInteraction) {
+    userInteraction = MessageUnscoper.getUnscopedMessage(userInteraction, mModuleRegistry.getModule(StringScoper.class));
     EventEmitter eventEmitter = mModuleRegistry.getModule(EventEmitter.class);
     if (eventEmitter != null) {
       eventEmitter.emit(ON_USER_INTERACTION_EVENT, userInteraction);
@@ -324,6 +326,7 @@ public class NotificationsModule extends ExportedModule implements RegistryLifec
 
   @Override
   public void onForegroundNotification(Bundle notification) {
+    notification = MessageUnscoper.getUnscopedMessage(notification, mModuleRegistry.getModule(StringScoper.class));
     EventEmitter eventEmitter = mModuleRegistry.getModule(EventEmitter.class);
     if (eventEmitter != null) {
       eventEmitter.emit(ON_FOREGROUND_NOTIFICATION_EVENT, notification);

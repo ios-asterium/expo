@@ -13,6 +13,14 @@ public class BareStringScoper implements InternalModule, StringScoper {
     }
 
     @Override
+    public String getUnscopedString(String s) {
+        if (s.contains(":")) {
+            return s.split(":")[1];
+        }
+        return s;
+    }
+
+    @Override
     public List<? extends Class> getExportedInterfaces() {
         return Collections.singletonList(StringScoper.class);
     }

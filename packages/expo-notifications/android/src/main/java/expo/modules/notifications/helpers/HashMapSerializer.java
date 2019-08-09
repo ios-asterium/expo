@@ -23,7 +23,7 @@ public class HashMapSerializer {
     } catch (JSONException e) {
       e.printStackTrace();
     }
-    return (HashMap<String, Object>)jsonToMap(serialized);
+    return jsonToMap(serialized);
   }
 
   public static HashMap<String, Object> jsonToMap(JSONObject json) throws JSONException {

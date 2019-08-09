@@ -1,6 +1,5 @@
 package expo.modules.notifications.scoper;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static expo.modules.notifications.NotificationConstants.NOTIFICATION_CATEGORY;

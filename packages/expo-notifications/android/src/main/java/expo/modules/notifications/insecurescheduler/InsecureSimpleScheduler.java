@@ -33,7 +33,7 @@ public class InsecureSimpleScheduler implements InsecureScheduler {
 
     ScheduledNotificationRepository.getInstance().addScheduledNotification(appId, notificationId);
 
-    if (notification.containsKey(NOTIFICATION_EXACT_TIME) && ((Boolean) notification.containsKey(NOTIFICATION_EXACT_TIME))) {
+    if (notification.containsKey(NOTIFICATION_EXACT_TIME) && notification.containsKey(NOTIFICATION_EXACT_TIME)) {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, elapsedTime, pendingIntent);
       } else {

@@ -29,12 +29,12 @@ public class SynchronicFuture implements Future<ChannelPOJO> {
   }
 
   @Override
-  public ChannelPOJO get() throws ExecutionException, InterruptedException {
+  public ChannelPOJO get() {
     return mChannelPOJO;
   }
 
   @Override
-  public ChannelPOJO get(long timeout, TimeUnit unit) throws ExecutionException, InterruptedException, TimeoutException {
+  public ChannelPOJO get(long timeout, TimeUnit unit) {
     return mChannelPOJO;
   }
 }
