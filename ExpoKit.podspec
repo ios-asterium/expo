@@ -1,4 +1,3 @@
-
 # generated from template-files/ios/ExpoKit.podspec
 
 Pod::Spec.new do |s|
