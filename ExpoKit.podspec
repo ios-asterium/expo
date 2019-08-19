@@ -32,6 +32,7 @@ Pod::Spec.new do |s|
     # remove once it stops depending on it.
     ss.dependency 'Bolts', '1.9.0'
     ss.dependency 'FBSDKLoginKit', '5.0.0'
+    ss.dependency 'FBSDKShareKit', '5.0.0'
     ss.dependency 'Fabric', '~> 1.6'
     ss.dependency 'GoogleSignIn', '~> 4.1'
     ss.dependency 'GoogleMaps', '~> 2.5.0'
